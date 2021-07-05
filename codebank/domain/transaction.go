@@ -1,11 +1,11 @@
 package domain
 
 import (
-	"time"
 	uuid "github.com/satori/go.uuid"
+	"time"
 )
 
-type TRansactionRepository interface {
+type TransactionRepository interface {
 	SaveTransaction(transaction Transaction, creditCard CreditCard) error
 	GetCreditCard(creditCard CreditCard) (CreditCard, error)
 	CreateCreditCard(creditCard CreditCard) error

@@ -1,8 +1,8 @@
 package domain
 
 import (
-	"time"
 	uuid "github.com/satori/go.uuid"
+	"time"
 )
 
 type CreditCard struct {

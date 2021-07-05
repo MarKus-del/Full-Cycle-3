@@ -24,12 +24,11 @@ func main() {
 	cc.Balance = 0
 
 	repo := repository.NewTransactionRepositoryDb(db)
-	err = repo.CreateCreditCard(*cc)
+	err := repo.CreateCreditCard(*cc)
 
 	if err != nil {
 		fmt.Println(err)
 	}
-
 }
 
 func setupTransactionUseCase(db *sql.DB) usecase.UseCaseTransaction {
@@ -40,7 +39,7 @@ func setupTransactionUseCase(db *sql.DB) usecase.UseCaseTransaction {
 }
 
 func setupDb() *sql.DB {
-	psqlInfo := fmt.Sprintf("host%s port=%s user=%s password=%s dbname=%s sslmode=disable",
+	psqlInfo := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
 		"db",
 		"5432",
 		"postgres",

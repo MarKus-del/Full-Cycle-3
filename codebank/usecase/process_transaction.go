@@ -6,6 +6,7 @@ import (
 	"github.com/MarKus-del/codebank/dto"
 	"github.com/MarKus-del/codebank/infrastructure/kafka"
 	"time"
+	"os"
 )
 
 type UseCaseTransaction struct {
@@ -46,7 +47,7 @@ func (u UseCaseTransaction) ProcessTransaction(transactionDto dto.Transaction) (
 		return domain.Transaction{}, err
 	}
 
-	err = u.KafkaProducer.Publish(string(transactionJson), "payments")
+	err = u.KafkaProducer.Publish(string(transactionJson), os.Getenv("KafkaTransactionsTopic"))
 	if err != nil {
 		return domain.Transaction{}, err
 	}

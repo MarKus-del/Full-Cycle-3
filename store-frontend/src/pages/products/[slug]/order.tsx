@@ -1,9 +1,5 @@
 import Head from 'next/head'
 import {
-  Card,
-  CardMedia,
-  CardContent,
-  CardActions,
   Typography,
   Button,
   ListItem,
@@ -14,9 +10,9 @@ import {
   Grid,
   Box
 } from '@material-ui/core'
-import { Product } from '../../../models'
+import { CreditCard, Product } from '../../../models'
 import { GetServerSideProps, NextPage } from 'next'
-import { CardHeader } from '@material-ui/core'
+import { useForm } from "react-hook-form";
 import http from '../../../http'
 import axios from 'axios'
 
@@ -25,6 +21,17 @@ interface OrderPageProps {
 }
 
 const OrderPage: NextPage<OrderPageProps> = ({ product }) => {
+  const { register, handleSubmit, setValue } = useForm();
+
+  const onSubmit = async (data: CreditCard) => {
+    const { data: order } = await http.post('orders', {
+      credit_card: data,
+      items: [{ product_id: product.id, quantity: 1 }],
+    });
+
+    console.log(order)
+  }
+
   return (
     <div>
       <Head>
@@ -60,13 +67,14 @@ const OrderPage: NextPage<OrderPageProps> = ({ product }) => {
         Pague com cartão de crédito
       </Typography>
 
-      <form>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={6}>
             <TextField
               label="Nome"
               fullWidth
               required
+              {...register('name')}
             />
           </Grid>
 
@@ -76,6 +84,7 @@ const OrderPage: NextPage<OrderPageProps> = ({ product }) => {
               required
               fullWidth
               inputProps={{ maxLength: 16 }}
+              {...register('number')}
             />
           </Grid>
 
@@ -85,6 +94,7 @@ const OrderPage: NextPage<OrderPageProps> = ({ product }) => {
               fullWidth
               type="number"
               required
+              {...register('cvv')}
             />
           </Grid>
 
@@ -95,6 +105,8 @@ const OrderPage: NextPage<OrderPageProps> = ({ product }) => {
                   label="Expiração mês"
                   fullWidth
                   type="number"required
+                  {...register('expiration_month')}
+                  onChange={e => setValue('expiration_month', parseInt(e.target.value))}
                 />
               </Grid>
 
@@ -104,6 +116,8 @@ const OrderPage: NextPage<OrderPageProps> = ({ product }) => {
                   fullWidth
                   type="number"
                   required
+                  {...register('expiration_year')}
+                  onChange={e => setValue('expiration_year', parseInt(e.target.value))}
                 />
               </Grid>
             </Grid>

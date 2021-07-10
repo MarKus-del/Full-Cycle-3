@@ -33,8 +33,7 @@ DELETE http://localhost:3000/products/ec911e3a-c0e4-490f-be93-1e12b46ef2d8
 GET http://localhost:3000/orders
 
 ###
-GET http://localhost:3000/orders/64be9c0d-0079-442b-8bd7-2de24c1cf322
-
+GET http://localhost:3000/orders/d310c4b4-3e5f-453a-a024-a80af51e1287
 
 ###
 POST http://localhost:3000/orders

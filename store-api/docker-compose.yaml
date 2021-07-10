@@ -9,9 +9,9 @@ services:
       - 3000:3000
     volumes:
       - .:/home/node/app
-    depends_on: 
+    depends_on:
       - db
-    extra_hosts: 
+    extra_hosts:
         - 'host.docker.internal:172.17.0.1'
 
   db:
@@ -22,7 +22,7 @@ services:
     volumes:
       - ./.docker/dbdata:/var/lib/postgresql/data
     #   - ./.docker/postgres:/docker-entrypoint-initdb.d
-    #ports: 
+    #ports:
     #  - 5432:5432
     environment:
       - POSTGRES_PASSWORD=root
@@ -36,4 +36,4 @@ services:
       - PGADMIN_DEFAULT_EMAIL=admin@user.com
       - PGADMIN_DEFAULT_PASSWORD=123456
     ports:
-      - 9000:80
+      - 9001:80

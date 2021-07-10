@@ -1,7 +1,8 @@
 import { Container, CssBaseline, MuiThemeProvider, Box } from '@material-ui/core'
 import type { AppProps } from 'next/app'
+import { SnackbarProvider } from 'notistack';
 import { useEffect } from 'react';
-import Navbar from '../components/NavBar'
+import Navbar from '../components/Navbar'
 import theme from './theme'
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -14,13 +15,16 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <MuiThemeProvider theme={theme}>
-      <CssBaseline />
-      <Navbar />
-      <Container>
-        <Box marginTop={1}>
-          <Component {...pageProps} />
-        </Box>
-      </Container>
+      <SnackbarProvider>
+        <CssBaseline />
+        <Navbar />
+        
+        <Container>
+          <Box marginTop={1}>
+            <Component {...pageProps} />
+          </Box>
+        </Container>
+      </SnackbarProvider>
     </MuiThemeProvider>
   )
 }

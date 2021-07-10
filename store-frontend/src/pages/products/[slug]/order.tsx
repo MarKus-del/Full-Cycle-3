@@ -16,6 +16,7 @@ import { useForm } from "react-hook-form";
 import http from '../../../http'
 import axios from 'axios'
 import { useRouter } from 'next/dist/client/router';
+import { useSnackbar } from 'notistack';
 
 interface OrderPageProps {
   product: Product
@@ -23,16 +24,26 @@ interface OrderPageProps {
 
 const OrderPage: NextPage<OrderPageProps> = ({ product }) => {
   const router = useRouter();
+  const { enqueueSnackbar } = useSnackbar();
   const { register, handleSubmit, setValue } = useForm();
 
   const onSubmit = async (data: CreditCard) => {
-    const { data: order } = await http.post('orders', {
-      credit_card: data,
-      items: [{ product_id: product.id, quantity: 1 }],
-    });
-    router.push(`/orders/${order.id}`);
 
-    console.log(order)
+    try {
+      const { data: order } = await http.post('orders', {
+        credit_card: data,
+        items: [{ product_id: product.id, quantity: 1 }],
+      });
+      router.push(`/orders/${order.id}`);
+    } catch (e) {
+      console.error(axios.isAxiosError(e) ? e.response?.data : e)
+      enqueueSnackbar('Erro ao realizar sua compra', {
+        variant: 'error'
+      })
+    }
+   
+
+    
   }
 
   return (

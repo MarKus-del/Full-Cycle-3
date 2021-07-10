@@ -8,6 +8,8 @@ export class RpcExceptionFilter implements ExceptionFilter {
   catch(exception: RpcException, host: ArgumentsHost) {
     const context = host.switchToHttp();
     const response = context.getResponse<Response>();
+
+    console.error(exception);
     const code =
       typeof exception.getError() === 'object'
         ? (exception.getError() as any).code

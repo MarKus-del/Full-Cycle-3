@@ -15,12 +15,14 @@ import { GetServerSideProps, NextPage } from 'next'
 import { useForm } from "react-hook-form";
 import http from '../../../http'
 import axios from 'axios'
+import { useRouter } from 'next/dist/client/router';
 
 interface OrderPageProps {
   product: Product
 }
 
 const OrderPage: NextPage<OrderPageProps> = ({ product }) => {
+  const router = useRouter();
   const { register, handleSubmit, setValue } = useForm();
 
   const onSubmit = async (data: CreditCard) => {
@@ -28,6 +30,7 @@ const OrderPage: NextPage<OrderPageProps> = ({ product }) => {
       credit_card: data,
       items: [{ product_id: product.id, quantity: 1 }],
     });
+    router.push(`/orders/${order.id}`);
 
     console.log(order)
   }

@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  db:
+    build: .
+    restart: always
+    tty: true
+    volumes:
+      - ./.docker/postgres:/docker-entrypoint-initdb.d
+    ports: 
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=root
+
+  pgadmin:
+    image: dpage/pgadmin4
+    tty: true
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@user.com
+      - PGADMIN_DEFAULT_PASSWORD=123456
+    ports:
+      - 9000:80

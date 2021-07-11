@@ -1,2 +1,4 @@
 database/.docker/pgdata
 .env
+apache-kafka/data
+apache-kafka/es01

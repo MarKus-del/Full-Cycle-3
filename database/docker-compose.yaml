@@ -6,11 +6,13 @@ services:
     restart: always
     tty: true
     volumes:
+      - ./.docker/pgdata:/var/lib/postgresql/data
       - ./.docker/postgres:/docker-entrypoint-initdb.d
     ports: 
       - 5432:5432
     environment:
       - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=codebank
 
   pgadmin:
     image: dpage/pgadmin4
@@ -20,3 +22,5 @@ services:
       - PGADMIN_DEFAULT_PASSWORD=123456
     ports:
       - 9000:80
+    depends_on: 
+      - db

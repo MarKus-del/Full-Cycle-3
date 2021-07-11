@@ -9,8 +9,6 @@ services:
       - 3002:3000
     volumes:
       - .:/home/node/app
-    depends_on:
-      - db
     extra_hosts:
-        - 'host.docker.internal:172.17.0.1'
+      - 'host.docker.internal:172.17.0.1'
 
